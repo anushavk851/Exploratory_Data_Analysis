@@ -11,12 +11,20 @@ xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.30,random_state=41)
 print(xtrain.shape)
 print(ytrain.shape)
 
+#3 Data Balancing
+#SMOTE
+from imblearn.over_sampling import SMOTE
+sm=SMOTE()
+xtrain1,ytrain1=sm.fit_resample(xtrain,ytrain)
+#to check
+ytrain1.value_counts()
+
 #3 feature scaling or Normalisation
 from sklearn.preprocessing import StandardScaler
 scaler=StandardScaler()
-scaler.fit(xtrain)
-xtrain=scaler.transform(xtrain)
-print(xtrain)
+scaler.fit(xtrain1)
+xtrain1=scaler.transform(xtrain1)
+print(xtrain1)
 xtest=scaler.transform(xtest)
 print(xtest)
 
@@ -24,7 +32,7 @@ print(xtest)
 from sklearn.naive_bayes import BernoulliNB
 model=BernoulliNB()
 #model training
-model.fit(xtrain,ytrain)
+model.fit(xtrain1,ytrain1)
 #model training
 ypred=model.predict(xtest)
 ypred
