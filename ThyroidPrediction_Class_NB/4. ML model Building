@@ -1,0 +1,79 @@
+#1. i/p and o/p separation
+x=df.iloc[:,:16]
+print(x.ndim)
+print(x)
+y=df['Recurred']
+y
+
+#2. Train test split
+from sklearn.model_selection import train_test_split
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.30,random_state=41)
+print(xtrain.shape)
+print(ytrain.shape)
+
+#3 feature scaling or Normalisation
+from sklearn.preprocessing import StandardScaler
+scaler=StandardScaler()
+scaler.fit(xtrain)
+xtrain=scaler.transform(xtrain)
+print(xtrain)
+xtest=scaler.transform(xtest)
+print(xtest)
+
+#4. Model Building
+from sklearn.naive_bayes import BernoulliNB
+model=BernoulliNB()
+#model training
+model.fit(xtrain,ytrain)
+#model training
+ypred=model.predict(xtest)
+ypred
+
+#5 Performance Evaluation
+
+#A. Confusion Matrix
+from sklearn.metrics import confusion_matrix,ConfusionMatrixDisplay
+cm=confusion_matrix(ytest,ypred)
+print(cm)
+cmd=ConfusionMatrixDisplay(cm)
+cmd.plot()
+
+#B. Accuracy score
+from sklearn.metrics import accuracy_score
+acc=accuracy_score(ytest,ypred)
+acc
+
+#C Recall score
+from sklearn.metrics import recall_score
+re=recall_score(ytest,ypred)
+re
+
+#D Precision score
+from sklearn.metrics import precision_score
+pre=precision_score(ytest,ypred)
+pre
+
+#E F1 score
+from sklearn.metrics import f1_score
+f1=f1_score(ytest,ypred)
+f1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
